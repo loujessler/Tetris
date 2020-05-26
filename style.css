@@ -4,26 +4,40 @@
 
 body {
     margin: 0;
-    background: aquamarine;
+    background: black;
+    color: white;
+    font-family: Arial, Haettenschweiler, sans-serif;
 }
 
 .main {
-    width: 320px;
-    height: 620px;
+    width: 340px;
+    height: 660px;
     margin: 100px auto 0;
-    border: 10px solid silver;
+    /*border: 10px solid lightcoral;*/
     font-size: 0;
 }
 
-.cell{
+.cell {
     width: 30px;
     height: 30px;
-    border: 1px solid black;
+    margin: 1px;
+    border: 1px solid white;
     display: inline-block;
 }
-.movingCell{
-    background-color: blue;
+
+.movingCell {
+    background-color: greenyellow;
 }
-.fixedCell{
-    background-color: gold;
+
+.fixedCell {
+    background-image: url("arca2.jpg");
+    background-size: cover;
+    box-shadow: 0 0 4em 4em white inset;
+}
+
+.game {
+    margin: auto;
+    padding-top: 20px;
+    width: 320px;
+    font-size: 24px;
 }
