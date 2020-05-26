@@ -33,27 +33,27 @@ let currentLevel = 1;
 let possibleLevels = {
     1: {
         scorePerline: 10,
-        speed: 400,
-        nextLevelScore: 500
+        speed: 500,
+        nextLevelScore: 5
     },
     2: {
         scorePerline: 15,
-        speed: 300,
-        nextLevelScore: 1500
+        speed: 400,
+        nextLevelScore: 15
     },
     3: {
         scorePerline: 30,
-        speed: 200,
-        nextLevelScore: 3000
+        speed: 350,
+        nextLevelScore: 30
     },
     4: {
         scorePerline: 50,
-        speed: 100,
-        nextLevelScore: 5000
+        speed: 300,
+        nextLevelScore: 50
     },
     5: {
         scorePerline: 100,
-        speed: 50,
+        speed: 250,
         nextLevelScore: Infinity
     }
 };
