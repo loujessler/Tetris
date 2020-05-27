@@ -35,9 +35,30 @@ body {
     box-shadow: 0 0 4em 4em white inset;
 }
 
-.game {
-    margin: auto;
+.info{
     padding-top: 20px;
-    width: 320px;
+    display: flex;
+    align-content: space-between;
+    justify-content: center;
+}
+
+.game {
+
+    width: 120px;
     font-size: 24px;
+}
+
+.box-for-tetro{
+    width: 120px;
+    height: 60px;
+}
+
+#next-tetro .cell{
+    font-size: 0;
+    margin: 0;
+    border: 0;
+}
+
+#next-tetro {
+ position: absolute;
 }
