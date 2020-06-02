@@ -2,6 +2,8 @@ let main = document.querySelector(".main");
 const scoreElem = document.getElementById("score");
 const levelElem = document.getElementById("level");
 const nextTetroElem = document.getElementById("next-tetro");
+const start = document.getElementById("start");
+const pause = document.getElementById('pause');
 const click = new Audio('click.mp3');
 const music = new Audio('time.mp3');
 
@@ -30,6 +32,7 @@ let playfield = [
 
 let score = 0;
 let currentLevel = 1;
+let isPause = false;
 
 let possibleLevels = {
     1: {
@@ -66,10 +69,10 @@ let figures = {
 
     ],
     I: [
-        [0, 1, 0, 0],
-        [0, 1, 0, 0],
-        [0, 1, 0, 0],
-        [0, 1, 0, 0]
+        [0, 0, 0, 0],
+        [1, 1, 1, 1],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
     ],
     S: [
         [0, 1, 1],
@@ -120,11 +123,11 @@ function draw() {
 
 function drawNextTetro() {
     let nextTetroInnerHTML = "";
-    for (let y=0; y< nextTetro.shape.length; y++){
-        for (let x=0; x< nextTetro.shape[y].length; x++){
-            if (nextTetro.shape[y][x]){
+    for (let y = 0; y < nextTetro.shape.length; y++) {
+        for (let x = 0; x < nextTetro.shape[y].length; x++) {
+            if (nextTetro.shape[y][x]) {
                 nextTetroInnerHTML += '<div class="cell movingCell"></div>'
-            }else{
+            } else {
                 nextTetroInnerHTML += '<div class="cell"></div>'
             }
         }
@@ -256,51 +259,66 @@ function fixTetro() {
 // }
 
 function moveTetroDown() {
-    activeTetro.y += 1;
-    if (hasCollisions()) {
-        activeTetro.y -= 1;
-        fixTetro();
-        checkLines();
-        activeTetro = nextTetro;
-        nextTetro = getNewTetro();
-    }
+
+        activeTetro.y += 1;
+        if (hasCollisions()) {
+            activeTetro.y -= 1;
+            fixTetro();
+            checkLines();
+            activeTetro = nextTetro;
+            if (hasCollisions()) {
+                alert("game over");
+            }
+            nextTetro = getNewTetro();
+        }
 }
 
 function dropTetro() {
-    for (let y =activeTetro.y; y< playfield.length; y++){
-        activeTetro.y +=1;
-        if (hasCollisions()){
-            activeTetro.y -=1;
+    for (let y = activeTetro.y; y < playfield.length; y++) {
+        activeTetro.y += 1;
+        if (hasCollisions()) {
+            activeTetro.y -= 1;
             break;
         }
     }
 }
 
 document.onkeydown = function (e) {
-    if (e.keyCode === 37) {
-        // Двигаемся влево
-        activeTetro.x -= 1;
-        if (hasCollisions()) {
-            activeTetro.x += 1;
-        }
-    } else if (e.keyCode === 39) {
-        // Двигаемся вправо
-        activeTetro.x += 1;
-        if (hasCollisions()) {
+    if (!isPause) {
+        if (e.keyCode === 37) {
+            // Двигаемся влево
             activeTetro.x -= 1;
+            if (hasCollisions()) {
+                activeTetro.x += 1;
+            }
+        } else if (e.keyCode === 39) {
+            // Двигаемся вправо
+            activeTetro.x += 1;
+            if (hasCollisions()) {
+                activeTetro.x -= 1;
+            }
+        } else if (e.keyCode === 40) {
+            // ускоряемся
+            moveTetroDown();
+        } else if (e.keyCode === 38) {
+            rotateTetro();
+        } else if (e.keyCode === 32) {
+            dropTetro();
         }
-    } else if (e.keyCode === 40) {
-        // ускоряемся
-        moveTetroDown();
-    } else if (e.keyCode === 38) {
-        rotateTetro();
-    } else if (e.keyCode === 32) {
-        dropTetro();
+        addActiveTetro();
+        draw();
+        drawNextTetro();
     }
-    addActiveTetro();
-    draw();
-    drawNextTetro();
 }
+
+pause.addEventListener('click', (e) => {
+    if (e.target.innerHTML === 'Pause'){
+        e.target.innerHTML = 'Keep Playing...'
+    } else {
+        e.target.innerHTML = "Pause";
+    }
+    isPause = !isPause;
+})
 
 scoreElem.innerHTML = score;
 if (score >= possibleLevels[currentLevel].nextLevelScore) {
